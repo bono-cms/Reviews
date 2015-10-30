@@ -41,7 +41,7 @@ return array(
 		'controller' => 'Admin:Add@indexAction'
 	),
 	
-	'/admin/module/reviews/add.ajax'	=> array(
+	'/admin/module/reviews/add.ajax' => array(
 		'controller' => 'Admin:Add@addAction',
 		'disallow' => array('guest')
 	),

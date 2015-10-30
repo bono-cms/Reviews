@@ -4,7 +4,8 @@ use Krystal\Form\Element;
 
 ?>
 
-<form>
+<form data-group="review">
+
 	<div class="well clearfix">
         <?php echo Element::hidden('review[id]', $review->getId()); ?>
         
@@ -55,15 +56,15 @@ use Krystal\Form\Element;
 	
 	<?php if ($review->getId()):?>
 	
-	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-	<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
+	<button data-button="save" data-url="<?php echo $this->url('Reviews:Admin:Edit@updateAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="save-create" data-back-url="<?php echo $this->url('Reviews:Admin:Add@indexAction'); ?>" data-url="<?php echo $this->url('Reviews:Admin:Edit@updateAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
 	
 	<?php else: ?>
 	
-	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php echo $this->translate('Add'); ?></button>
-	<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php echo $this->translate('Add & Create new'); ?></button>
+	<button data-button="add" data-back-url="<?php echo $this->url('Reviews:Admin:Edit@indexAction', null); ?>" data-url="<?php echo $this->url('Reviews:Admin:Add@addAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php echo $this->translate('Add'); ?></button>
+	<button data-button="add-create" data-url="<?php echo $this->url('Reviews:Admin:Add@addAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php echo $this->translate('Add & Create new'); ?></button>
 	
 	<?php endif; ?>
 	
-	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+	<button data-button="cancel" data-url="<?php echo $this->url('Reviews:Admin:Browser@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
 </form>
