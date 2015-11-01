@@ -16,13 +16,13 @@ use Krystal\Security\Filter;
 
 final class ConfigManager extends AbstractConfigManager
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function populate()
-	{
-		$entity = $this->getEntity();
-		$entity->setEnabledModeration((bool) $this->get('enable_moderation', true))
-			   ->setPerPageCount((int) $this->get('per_page_count', 5));
-	}
+    /**
+     * {@inheritDoc}
+     */
+    protected function populate()
+    {
+        $entity = $this->getEntity();
+        $entity->setEnabledModeration((bool) $this->get('enable_moderation', true))
+               ->setPerPageCount((int) $this->get('per_page_count', 5));
+    }
 }

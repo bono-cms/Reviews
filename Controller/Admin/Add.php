@@ -15,46 +15,46 @@ use Krystal\Stdlib\VirtualEntity;
 
 final class Add extends AbstractReview
 {
-	/**
-	 * Shows adding form
-	 * 
-	 * @return string
-	 */
-	public function indexAction()
-	{
-		$this->loadSharedPlugins();
+    /**
+     * Shows adding form
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        $this->loadSharedPlugins();
 
-		$review = new VirtualEntity();
-		$review->setPublished(true)
-			   ->setTimestamp(time());
+        $review = new VirtualEntity();
+        $review->setPublished(true)
+               ->setTimestamp(time());
 
-		return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-			'title' => 'Add new review',
-			'review' => $review
-		)));
-	}
+        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+            'title' => 'Add new review',
+            'review' => $review
+        )));
+    }
 
-	/**
-	 * Adds a review
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('review'));
+    /**
+     * Adds a review
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('review'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			$reviewsManager = $this->getReviewsManager();
+            $reviewsManager = $this->getReviewsManager();
 
-			if ($reviewsManager->add($this->getContainer())) {
+            if ($reviewsManager->add($this->getContainer())) {
 
-				$this->flashBag->set('success', 'A review has been added successfully');
-				return $reviewsManager->getLastId();
-			}
+                $this->flashBag->set('success', 'A review has been added successfully');
+                return $reviewsManager->getLastId();
+            }
 
-		} else {
-			return $formValidator->getErrors();
-		}
-	}
+        } else {
+            return $formValidator->getErrors();
+        }
+    }
 }

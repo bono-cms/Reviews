@@ -13,48 +13,48 @@ namespace Reviews\Controller\Admin;
 
 final class Edit extends AbstractReview
 {
-	/**
-	 * Shows edit form
-	 * 
-	 * @param string $id Reviews id
-	 * @return string
-	 */
-	public function indexAction($id)
-	{
-		$review = $this->getReviewsManager()->fetchById($id);
+    /**
+     * Shows edit form
+     * 
+     * @param string $id Reviews id
+     * @return string
+     */
+    public function indexAction($id)
+    {
+        $review = $this->getReviewsManager()->fetchById($id);
 
-		if ($review !== false) {
-			$this->loadSharedPlugins();
+        if ($review !== false) {
+            $this->loadSharedPlugins();
 
-			return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
-				'title' => 'Edit the review',
-				'review' => $review
-			)));
+            return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+                'title' => 'Edit the review',
+                'review' => $review
+            )));
 
-		} else {
-			return false;
-		}
-	}
+        } else {
+            return false;
+        }
+    }
 
-	/**
-	 * Updates a review
-	 * 
-	 * @return string
-	 */
-	public function updateAction()
-	{
-		$formValidator = $this->getValidator($this->request->getPost('review'));
+    /**
+     * Updates a review
+     * 
+     * @return string
+     */
+    public function updateAction()
+    {
+        $formValidator = $this->getValidator($this->request->getPost('review'));
 
-		if ($formValidator->isValid()) {
+        if ($formValidator->isValid()) {
 
-			if ($this->getReviewsManager()->update($this->getContainer())) {
-				$this->flashBag->set('success', 'The review has been updated successfully');
-				return '1';
-			}
+            if ($this->getReviewsManager()->update($this->getContainer())) {
+                $this->flashBag->set('success', 'The review has been updated successfully');
+                return '1';
+            }
 
-		} else {
+        } else {
 
-			return $formValidator->getErrors();
-		}
-	}
+            return $formValidator->getErrors();
+        }
+    }
 }

@@ -16,14 +16,14 @@ use Reviews\Service\ReviewsManager;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getServiceProviders()
-	{
-		return array(
-			'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'), $this->getHistoryManager()),
-			'configManager' => $this->getConfigService()
-		);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getServiceProviders()
+    {
+        return array(
+            'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'), $this->getHistoryManager()),
+            'configManager' => $this->getConfigService()
+        );
+    }
 }

@@ -13,70 +13,70 @@ namespace Reviews\Storage;
 
 interface ReviewsMapperInterface
 {
-	/**
-	 * Fetches review author's name by associated id
-	 * 
-	 * @param string $id
-	 * @return string
-	 */
-	public function fetchNameById($id);
+    /**
+     * Fetches review author's name by associated id
+     * 
+     * @param string $id
+     * @return string
+     */
+    public function fetchNameById($id);
 
-	/**
-	 * Updates review published state by its associated id
-	 * 
-	 * @param string $id Review id
-	 * @param string $published Either 0 or 1
-	 * @return boolean
-	 */
-	public function updatePublishedById($id, $published);
+    /**
+     * Updates review published state by its associated id
+     * 
+     * @param string $id Review id
+     * @param string $published Either 0 or 1
+     * @return boolean
+     */
+    public function updatePublishedById($id, $published);
 
-	/**
-	 * Inserts a review
-	 * 
-	 * @param array $data Review data
-	 * @return boolean
-	 */
-	public function insert(array $data);
+    /**
+     * Inserts a review
+     * 
+     * @param array $data Review data
+     * @return boolean
+     */
+    public function insert(array $data);
 
-	/**
-	 * Updates a review
-	 * 
-	 * @param array $data Review data
-	 * @return boolean
-	 */
-	public function update(array $data);
+    /**
+     * Updates a review
+     * 
+     * @param array $data Review data
+     * @return boolean
+     */
+    public function update(array $data);
 
-	/**
-	 * Fetches all published reviews filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllByPage($page, $itemsPerPage);
+    /**
+     * Fetches all published reviews filtered by pagination
+     * 
+     * @param integer $page Current page
+     * @param integer $itemsPerPage Per page count
+     * @return array
+     */
+    public function fetchAllByPage($page, $itemsPerPage);
 
-	/**
-	 * Fetches all published reviews filtered by pagination
-	 * 
-	 * @param integer $page Current page
-	 * @param integer $itemsPerPage Per page count
-	 * @return array
-	 */
-	public function fetchAllPublishedByPage($page, $itemsPerPage);
+    /**
+     * Fetches all published reviews filtered by pagination
+     * 
+     * @param integer $page Current page
+     * @param integer $itemsPerPage Per page count
+     * @return array
+     */
+    public function fetchAllPublishedByPage($page, $itemsPerPage);
 
-	/**
-	 * Fetches review data by its associated id
-	 * 
-	 * @param string $id Review id
-	 * @return array
-	 */
-	public function fetchById($id);
+    /**
+     * Fetches review data by its associated id
+     * 
+     * @param string $id Review id
+     * @return array
+     */
+    public function fetchById($id);
 
-	/**
-	 * Deletes a review by its associated id
-	 * 
-	 * @param string $id Review id
-	 * @return boolean
-	 */
-	public function deleteById($id);
+    /**
+     * Deletes a review by its associated id
+     * 
+     * @param string $id Review id
+     * @return boolean
+     */
+    public function deleteById($id);
 }
