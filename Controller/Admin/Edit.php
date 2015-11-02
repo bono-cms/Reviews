@@ -16,7 +16,7 @@ final class Edit extends AbstractReview
     /**
      * Shows edit form
      * 
-     * @param string $id Reviews id
+     * @param string $id
      * @return string
      */
     public function indexAction($id)
@@ -25,11 +25,13 @@ final class Edit extends AbstractReview
 
         if ($review !== false) {
             $this->loadSharedPlugins();
+            $this->loadBreadcrumbs('Edit the review');
 
-            return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+            return $this->view->render($this->getTemplatePath(), array(
+                'dateFormat' => $this->getReviewsManager()->getTimeFormat(),
                 'title' => 'Edit the review',
                 'review' => $review
-            )));
+            ));
 
         } else {
             return false;
@@ -46,14 +48,12 @@ final class Edit extends AbstractReview
         $formValidator = $this->getValidator($this->request->getPost('review'));
 
         if ($formValidator->isValid()) {
-
             if ($this->getReviewsManager()->update($this->getContainer())) {
                 $this->flashBag->set('success', 'The review has been updated successfully');
                 return '1';
             }
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

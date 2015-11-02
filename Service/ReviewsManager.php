@@ -111,10 +111,8 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
         $name = Filter::escape($this->reviewsMapper->fetchNameById($id));
 
         if ($this->reviewsMapper->deleteById($id)) {
-
             $this->track('A review by "%s" has been removed', $name);
             return true;
-
         } else {
             return false;
         }

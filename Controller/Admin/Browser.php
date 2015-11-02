@@ -31,7 +31,6 @@ final class Browser extends AbstractController
         $this->loadPlugins();
 
         return $this->view->render('browser', array(
-
             'title' => 'Reviews',
             'dateFormat' => $reviewsManager->getTimeFormat(),
             'reviews'   => $reviewsManager->fetchAllByPage($page, $this->getSharedPerPageCount()),
@@ -47,14 +46,9 @@ final class Browser extends AbstractController
     private function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
+                   ->appendScript('@Reviews/admin/browser.js');
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'name' => 'Reviews',
-                'link' => '#'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne('Reviews');
     }
 
     /**
@@ -65,7 +59,6 @@ final class Browser extends AbstractController
     public function deleteAction()
     {
         if ($this->request->hasPost('id')) {
-
             $id = $this->request->getPost('id');
 
             $reviewsManager = $this->getModuleService('reviewsManager');
@@ -83,7 +76,6 @@ final class Browser extends AbstractController
     public function deleteSelectedAction()
     {
         if ($this->request->hasPost('toDelete')) {
-
             $ids = array_keys($this->request->getPost('toDelete'));
 
             // Grab the service
@@ -106,7 +98,6 @@ final class Browser extends AbstractController
     public function saveAction()
     {
         if ($this->request->hasPost('published')) {
-
             $published = $this->request->getPost('published');
 
             // Grab the service
@@ -114,7 +105,6 @@ final class Browser extends AbstractController
             $reviewsManager->updatePublished($published);
 
             $this->flashBag->set('success', 'Settings have been successfully saved');
-
             return '1';
         }
     }

@@ -45,14 +45,12 @@ final class Reviews extends AbstractController
      */
     private function showAction($id, $pageNumber, $code, $slug)
     {
-        $pageManager = $this->getService('Pages', 'pageManager');
-        $page = $pageManager->fetchById($id);
+        $page = $this->getService('Pages', 'pageManager')->fetchById($id);
 
         if ($page !== false) {
-
             // Prepare view
             $this->loadSitePlugins();
-            $this->view->getBreadcrumbBag()->add($pageManager->getBreadcrumbs($page));
+            $this->view->getBreadcrumbBag()->addOne($page->getTitle());
 
             $reviewManager = $this->getReviewsManager();
             $reviews = $reviewManager->fetchAllPublishedByPage($pageNumber, $this->getConfig()->getPerPageCount());
@@ -74,7 +72,7 @@ final class Reviews extends AbstractController
     /**
      * Adds a review by the user
      * 
-     * @return string The response
+     * @return string
      */
     private function submitAction()
     {
@@ -104,7 +102,6 @@ final class Reviews extends AbstractController
             return '1';
 
         } else {
-
             return $formValidator->getErrors();
         }
     }

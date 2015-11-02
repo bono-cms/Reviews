@@ -23,15 +23,17 @@ final class Add extends AbstractReview
     public function indexAction()
     {
         $this->loadSharedPlugins();
+        $this->loadBreadcrumbs('Add new review');
 
         $review = new VirtualEntity();
         $review->setPublished(true)
                ->setTimestamp(time());
 
-        return $this->view->render($this->getTemplatePath(), $this->getWithSharedVars(array(
+        return $this->view->render($this->getTemplatePath(), array(
+            'dateFormat' => $this->getReviewsManager()->getTimeFormat(),
             'title' => 'Add new review',
             'review' => $review
-        )));
+        ));
     }
 
     /**
@@ -44,11 +46,9 @@ final class Add extends AbstractReview
         $formValidator = $this->getValidator($this->request->getPost('review'));
 
         if ($formValidator->isValid()) {
-
             $reviewsManager = $this->getReviewsManager();
 
             if ($reviewsManager->add($this->getContainer())) {
-
                 $this->flashBag->set('success', 'A review has been added successfully');
                 return $reviewsManager->getLastId();
             }

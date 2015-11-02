@@ -54,34 +54,20 @@ abstract class AbstractReview extends AbstractController
     final protected function loadSharedPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/review.form.js'))
+                   ->appendScript('@Reviews/admin/review.form.js')
                    ->load(array($this->getWysiwygPluginName(), 'datepicker'));
     }
 
     /**
-     * Returns shared variables for Edit and Add controllers
+     * Loads breadcrumbs
      * 
-     * @param array $overrides
-     * @return array
+     * @param string $title
+     * @return void
      */
-    final protected function getWithSharedVars(array $overrides)
+    final protected function loadBreadcrumbs($title)
     {
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'name' => 'Reviews',
-                'link' => 'Reviews:Admin:Browser@indexAction'
-            ),
-            array(
-                'name' => $overrides['title'],
-                'link' => '#'
-            )
-        ));
-
-        $vars = array(
-            'dateFormat' => $this->getReviewsManager()->getTimeFormat(),
-        );
-
-        return array_replace_recursive($vars, $overrides);
+        $this->view->getBreadcrumbBag()->addOne('Reviews', 'Reviews:Admin:Browser@indexAction')
+                                       ->addOne($title);
     }
 
     /**
