@@ -10,7 +10,6 @@
  */
 
 return array(
-    
     '/module/reviews' => array(
         'controller' => 'Reviews@indexAction'
     ),
@@ -25,43 +24,33 @@ return array(
     ),
     
     '/admin/module/reviews' => array(
-        'controller' => 'Admin:Browser@indexAction'
+        'controller' => 'Admin:Review@gridAction'
     ),
     
-    '/admin/module/reviews/save.ajax' => array(
-        'controller' => 'Admin:Browser@saveAction',
+    '/admin/module/reviews/tweak' => array(
+        'controller' => 'Admin:Review@tweakAction',
         'disallow' => array('guest')
     ),
     
     '/admin/module/reviews/page/(:var)' => array(
-        'controller' => 'Admin:Browser@indexAction'
+        'controller' => 'Admin:Review@gridAction'
     ),
     
     '/admin/module/reviews/add' => array(
-        'controller' => 'Admin:Add@indexAction'
-    ),
-    
-    '/admin/module/reviews/add.ajax' => array(
-        'controller' => 'Admin:Add@addAction',
-        'disallow' => array('guest')
+        'controller' => 'Admin:Review@addAction'
     ),
     
     '/admin/module/reviews/edit/(:var)' => array(
-        'controller' => 'Admin:Edit@indexAction'
+        'controller' => 'Admin:Review@editAction'
     ),
     
-    '/admin/module/reviews/edit.ajax' => array(
-        'controller' => 'Admin:Edit@updateAction',
+    '/admin/module/reviews/save' => array(
+        'controller' => 'Admin:Review@saveAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/reviews/delete.ajax' => array(
-        'controller' => 'Admin:Browser@deleteAction',
-        'disallow' => array('guest')
-    ),
-    
-    '/admin/module/reviews/delete-selected.ajax' => array(
-        'controller' => 'Admin:Browser@deleteSelectedAction',
+    '/admin/module/reviews/delete' => array(
+        'controller' => 'Admin:Review@deleteAction',
         'disallow' => array('guest')
     )
 );

@@ -2,7 +2,7 @@ $(function() {
 	$.delete({
 		categories : {
 			main : {
-				url : "/admin/module/reviews/delete.ajax"
+				url : "/admin/module/reviews/delete"
 			}
 		}
 	});
