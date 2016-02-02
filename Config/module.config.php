@@ -4,7 +4,7 @@
   array (
     'name' => 'Reviews',
     'url' => '/admin/module/reviews',
-    'icon' => '/module/Reviews/Assets/reviews.png',
+    'icon' => 'fa fa-comments-o fa-5x',
     'order' => 1,
     'description' => 'Reviews module allows you to make a guest book on your site',
   ),

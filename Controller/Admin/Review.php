@@ -136,30 +136,7 @@ final class Review extends AbstractController
      */
     public function deleteAction()
     {
-        // Batch removal
-        if ($this->request->hasPost('toDelete')) {
-            $ids = array_keys($this->request->getPost('toDelete'));
-
-            // Grab the service
-            $reviewsManager = $this->getModuleService('reviewsManager');
-            $reviewsManager->deleteByIds($ids);
-
-            $this->flashBag->set('success', 'Selected reviews have been successfully removed');
-        } else {
-            $this->flashBag->set('warning', 'You should select at least one review to remove');
-        }
-
-        // Single removal
-        if ($this->request->hasPost('id')) {
-            $id = $this->request->getPost('id');
-
-            $reviewsManager = $this->getModuleService('reviewsManager');
-            $this->flashBag->set('success', 'A review has been removed successfully');
-
-            $reviewsManager->deleteById($id);
-        }
-
-        return '1';
+        return $this->invokeRemoval('reviewsManager');
     }
 
     /**
@@ -170,8 +147,9 @@ final class Review extends AbstractController
     public function saveAction()
     {
         $input = $this->request->getPost('review');
+        $data = array_merge(array('ip' => $this->request->getClientIp()), $input);
 
-        $formValidator = $this->validatorFactory->build(array(
+        return $this->invokeSave('reviewsManager', $input['id'], $data, array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -181,27 +159,5 @@ final class Review extends AbstractController
                 )
             )
         ));
-
-        if ($formValidator->isValid()) {
-            $reviewsManager = $this->getReviewsManager();
-
-            $data = array_merge(array('ip' => $this->request->getClientIp()), $input);
-
-            if ($input['id']) {
-                if ($reviewsManager->update($data)) {
-                    $this->flashBag->set('success', 'The review has been updated successfully');
-                    return '1';
-                }
-
-            } else {
-                if ($reviewsManager->add($data)) {
-                    $this->flashBag->set('success', 'A review has been added successfully');
-                    return $reviewsManager->getLastId();
-                }
-            }
-
-        } else {
-            return $formValidator->getErrors();
-        }
     }
 }

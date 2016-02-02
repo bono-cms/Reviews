@@ -19,6 +19,11 @@ final class Config extends AbstractConfigController
     /**
      * {@inheritDoc}
      */
+    protected $parent = 'Reviews:Admin:Review@gridAction';
+
+    /**
+     * {@inheritDoc}
+     */
     protected function getValidationRules()
     {
         return array(
