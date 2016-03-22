@@ -21,7 +21,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
      */
     public static function getTableName()
     {
-        return 'bono_module_reviews';
+        return self::getWithPrefix('bono_module_reviews');
     }
 
     /**
