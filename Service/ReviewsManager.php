@@ -139,27 +139,16 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
     }
 
     /**
-     * Fetches all published reviews filtered by pagination
-     * 
-     * @param integer $page Current page
-     * @param integer $itemsPerPage Items to be shown per page
-     * @return array
-     */
-    public function fetchAllPublishedByPage($page, $itemsPerPage)
-    {
-        return $this->prepareResults($this->reviewsMapper->fetchAllPublishedByPage($page, $itemsPerPage));
-    }
-
-    /**
      * Fetches all reviews filtered pagination
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Items to be shown per page
+     * @param boolean $published
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage)
+    public function fetchAllByPage($page, $itemsPerPage, $published)
     {
-        return $this->prepareResults($this->reviewsMapper->fetchAllByPage($page, $itemsPerPage));
+        return $this->prepareResults($this->reviewsMapper->fetchAllByPage($page, $itemsPerPage, $published));
     }
 
     /**

@@ -25,25 +25,6 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
     }
 
     /**
-     * Returns shared select
-     * 
-     * @param boolean $published
-     * @return \Krystal\Db\Sql\Db
-     */
-    private function getSelectQuery($published)
-    {
-        $db = $this->db->select('*')
-                       ->from(static::getTableName())
-                       ->whereEquals('lang_id', $this->getLangId());
-
-        if ($published === true) {
-            $db->andWhereEquals('published', '1');
-        }
-
-        return $db;
-    }
-
-    /**
      * Fetches review author's name by associated id
      * 
      * @param string $id
@@ -98,30 +79,28 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Per page count
+     * @param boolean $published
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage)
+    public function fetchAllByPage($page, $itemsPerPage, $published)
     {
-        return $this->getSelectQuery(false)
-                    ->orderBy('id')
-                    ->desc()
-                    ->paginate($page, $itemsPerPage)
-                    ->queryAll();
-    }
+        $db = $this->db->select('*')
+                       ->from(static::getTableName())
+                       ->whereEquals('lang_id', $this->getLangId());
 
-    /**
-     * Fetches all published reviews filtered by pagination
-     * 
-     * @param integer $page Current page
-     * @param integer $itemsPerPage Per page count
-     * @return array
-     */
-    public function fetchAllPublishedByPage($page, $itemsPerPage)
-    {
-        return $this->getSelectQuery(true)
-                    ->orderBy(array('timestamp' => 'DESC', 'id' => 'DESC'))
-                    ->paginate($page, $itemsPerPage)
-                    ->queryAll();
+        if ($published === true) {
+            $db->andWhereEquals('published', '1')
+               ->orderBy(array(
+                    'timestamp' => 'DESC', 
+                    'id' => 'DESC'
+               ));
+        } else {
+            $db->orderBy('id')
+               ->desc();
+        }
+
+        return $db->paginate($page, $itemsPerPage)
+                  ->queryAll();
     }
 
     /**

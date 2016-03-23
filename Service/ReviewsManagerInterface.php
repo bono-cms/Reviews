@@ -52,22 +52,14 @@ interface ReviewsManagerInterface
     public function getTimeFormat();
 
     /**
-     * Fetches all published reviews filtered by pagination
-     * 
-     * @param integer $page Current page
-     * @param integer $itemsPerPage Items to be shown per page
-     * @return array
-     */
-    public function fetchAllPublishedByPage($page, $itemsPerPage);
-
-    /**
      * Fetches all reviews filtered pagination
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Items to be shown per page
+     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage);
+    public function fetchAllByPage($page, $itemsPerPage, $published);
 
     /**
      * Returns last id
