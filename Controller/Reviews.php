@@ -50,9 +50,10 @@ final class Reviews extends AbstractController
         if ($page !== false) {
             // Prepare view
             $this->loadSitePlugins();
-            $this->view->getBreadcrumbBag()->addOne($page->getTitle());
+            $this->view->getBreadcrumbBag()
+                       ->addOne($page->getTitle());
 
-            $reviewManager = $this->getReviewsManager();
+            $reviewManager = $this->getModuleService('reviewsManager');
             $reviews = $reviewManager->fetchAllByPage($pageNumber, $this->getConfig()->getPerPageCount(), true);
 
             $paginator = $reviewManager->getPaginator();
@@ -77,7 +78,18 @@ final class Reviews extends AbstractController
     private function submitAction()
     {
         $input = $this->request->getPost();
-        $formValidator = $this->getValidator($input);
+
+        $formValidator = $this->createValidator(array(
+            'input' => array(
+                'source' => $input,
+                'definition' => array(
+                    'name' => new Pattern\Name(),
+                    'email' => new Pattern\Email(),
+                    'captcha' => new Pattern\Captcha($this->captcha),
+                    'review' => new Pattern\Message()
+                )
+            )
+        ));
 
         if ($formValidator->isValid()) {
             // Summary data to be sent
@@ -95,7 +107,7 @@ final class Reviews extends AbstractController
                 $notificationManager->notify('You have received a new review');
             }
 
-            if ($this->getReviewsManager()->send($data, $published)) {
+            if ($this->getModuleService('reviewsManager')->send($data, $published)) {
                 $this->flashBag->set('success', 'Your review has been sent! Thank you');
             }
 
@@ -135,36 +147,5 @@ final class Reviews extends AbstractController
     private function getConfig()
     {
         return $this->getModuleService('configManager')->getEntity();
-    }
-
-    /**
-     * Returns reviews manager
-     * 
-     * @return \Reviews\Service\ReviewsManager
-     */
-    private function getReviewsManager()
-    {
-        return $this->getModuleService('reviewsManager');
-    }
-    
-    /**
-     * Returns prepared form validator
-     * 
-     * @param array $input Raw input data
-     * @return \Krystal\Validate\ValidatorChain
-     */
-    private function getValidator(array $input)
-    {
-        return $this->validatorFactory->build(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => array(
-                    'name' => new Pattern\Name(),
-                    'email' => new Pattern\Email(),
-                    'captcha' => new Pattern\Captcha($this->captcha),
-                    'review' => new Pattern\Message()
-                )
-            )
-        ));
     }
 }

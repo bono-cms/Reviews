@@ -18,16 +18,6 @@ use Krystal\Stdlib\VirtualEntity;
 final class Review extends AbstractController
 {
     /**
-     * Returns review manager
-     * 
-     * @return \Reviews\Service\ReviewsManager
-     */
-    private function getReviewsManager()
-    {
-        return $this->getModuleService('reviewsManager');
-    }
-
-    /**
      * Creates a form
      * 
      * @param \Krystal\Stdlib\VirtualEntity $review
@@ -46,7 +36,7 @@ final class Review extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('review.form', array(
-            'dateFormat' => $this->getReviewsManager()->getTimeFormat(),
+            'dateFormat' => $this->getModuleService('reviewsManager')->getTimeFormat(),
             'review' => $review
         ));
     }
@@ -73,7 +63,7 @@ final class Review extends AbstractController
      */
     public function editAction($id)
     {
-        $review = $this->getReviewsManager()->fetchById($id);
+        $review = $this->getModuleService('reviewsManager')->fetchById($id);
 
         if ($review !== false) {
             return $this->createForm($review, 'Edit the review');
