@@ -91,7 +91,7 @@ final class Review extends AbstractController
         $reviewsManager = $this->getModuleService('reviewsManager');
 
         $paginator = $reviewsManager->getPaginator();
-        $paginator->setUrl('/admin/module/reviews/page/(:var)');
+        $paginator->setUrl($this->createUrl('Reviews:Admin:Review@gridAction', array(), 1));
 
         return $this->view->render('browser', array(
             'dateFormat' => $reviewsManager->getTimeFormat(),
