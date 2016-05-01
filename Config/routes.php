@@ -49,7 +49,7 @@ return array(
         'disallow' => array('guest')
     ),
     
-    '/admin/module/reviews/delete' => array(
+    '/admin/module/reviews/delete/(:var)' => array(
         'controller' => 'Admin:Review@deleteAction',
         'disallow' => array('guest')
     )

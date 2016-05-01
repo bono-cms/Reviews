@@ -80,10 +80,6 @@ final class Review extends AbstractController
      */
     public function gridAction($page = 1)
     {
-        // Load view plugins
-        $this->view->getPluginBag()
-                   ->appendScript('@Reviews/admin/browser.js');
-
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Reviews');
@@ -122,11 +118,12 @@ final class Review extends AbstractController
     /**
      * Removes a review by its associated id
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        return $this->invokeRemoval('reviewsManager');
+        return $this->invokeRemoval('reviewsManager', $id);
     }
 
     /**
