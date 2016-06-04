@@ -53,13 +53,13 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
     protected function toEntity(array $review)
     {
         $entity = new VirtualEntity();
-        $entity->setId((int) $review['id'])
-                  ->setTimestamp((int) $review['timestamp'])
-                  ->setIp($review['ip'])
-                  ->setPublished((bool) $review['published'])
-                  ->setName(Filter::escape($review['name']))
-                  ->setEmail(Filter::escape($review['email']))
-                  ->setReview(Filter::escapeContent($review['review']));
+        $entity->setId($review['id'], VirtualEntity::FILTER_INT)
+                  ->setTimestamp($review['timestamp'], VirtualEntity::FILTER_INT)
+                  ->setIp($review['ip'], VirtualEntity::FILTER_TAGS)
+                  ->setPublished($review['published'], VirtualEntity::FILTER_BOOL)
+                  ->setName($review['name'], VirtualEntity::FILTER_TAGS)
+                  ->setEmail($review['email'], VirtualEntity::FILTER_TAGS)
+                  ->setReview($review['review'], VirtualEntity::FILTER_SAFE_TAGS);
 
         return $entity;
     }
