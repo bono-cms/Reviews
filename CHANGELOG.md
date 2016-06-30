@@ -4,6 +4,7 @@ CHANGELOG
 1.1
 ---
 
+ * Changed the way of storing configuration data. Since now its stored in the database
  * Minor improvements in internals
  * Merged `fetchAllPublishedByPage()` with `fetchAllPublished()`
  * Added support for table prefix

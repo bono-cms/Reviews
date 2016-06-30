@@ -11,18 +11,20 @@
 
 namespace Reviews\Service;
 
-use Krystal\Config\File\AbstractConfigManager;
-use Krystal\Security\Filter;
+use Krystal\Config\ConfigModuleService;
+use Krystal\Stdlib\VirtualEntity;
 
-final class ConfigManager extends AbstractConfigManager
+final class ConfigManager extends ConfigModuleService
 {
     /**
      * {@inheritDoc}
      */
-    protected function populate()
+    public function getEntity()
     {
-        $entity = $this->getEntity();
-        $entity->setEnabledModeration((bool) $this->get('enable_moderation', true))
-               ->setPerPageCount((int) $this->get('per_page_count', 5));
+        $entity = new VirtualEntity;
+        $entity->setEnabledModeration($this->get('enable_moderation', true), VirtualEntity::FILTER_BOOL)
+               ->setPerPageCount($this->get('per_page_count', 5), VirtualEntity::FILTER_INT);
+
+        return $entity;
     }
 }
