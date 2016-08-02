@@ -2,6 +2,7 @@
 
 return array(
  'name' => 'Reviews',
+ 'caption' => 'Reviews',
  'route' => 'Reviews:Admin:Review@gridAction',
  'icon' => 'fa fa-comments-o fa-5x',
  'order' => 1,
