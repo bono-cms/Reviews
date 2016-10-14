@@ -55,10 +55,10 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
         $entity = new VirtualEntity();
         $entity->setId($review['id'], VirtualEntity::FILTER_INT)
                   ->setTimestamp($review['timestamp'], VirtualEntity::FILTER_INT)
-                  ->setIp($review['ip'], VirtualEntity::FILTER_TAGS)
+                  ->setIp($review['ip'], VirtualEntity::FILTER_HTML)
                   ->setPublished($review['published'], VirtualEntity::FILTER_BOOL)
-                  ->setName($review['name'], VirtualEntity::FILTER_TAGS)
-                  ->setEmail($review['email'], VirtualEntity::FILTER_TAGS)
+                  ->setName($review['name'], VirtualEntity::FILTER_HTML)
+                  ->setEmail($review['email'], VirtualEntity::FILTER_HTML)
                   ->setReview($review['review'], VirtualEntity::FILTER_SAFE_TAGS);
 
         return $entity;

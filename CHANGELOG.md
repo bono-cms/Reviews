@@ -4,6 +4,7 @@ CHANGELOG
 1.1
 ---
 
+ * Fixed issue with quote escaping
  * Changed the way of storing configuration data. Since now its stored in the database
  * Minor improvements in internals
  * Merged `fetchAllPublishedByPage()` with `fetchAllPublished()`
