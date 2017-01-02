@@ -51,7 +51,7 @@ final class Reviews extends AbstractController
             // Prepare view
             $this->loadSitePlugins();
             $this->view->getBreadcrumbBag()
-                       ->addOne($page->getTitle());
+                       ->addOne($page->getName());
 
             $reviewManager = $this->getModuleService('reviewsManager');
             $reviews = $reviewManager->fetchAllByPage($pageNumber, $this->getConfig()->getPerPageCount(), true);
