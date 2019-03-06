@@ -5,36 +5,35 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<form data-group="config">
+<form class="card" data-group="config" autocomplete="off">
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
+        <li role="presentation" class="active"><a href="#common" role="tab" data-toggle="tab"><i class="fa fa-home fa-fw"></i> <?php $this->show('Common'); ?></a></li>
 	</ul>
-	
+
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="common" role="tabpanel">
-			<div class="well">
-				<div class="form-group">
-					<label class="col-lg-2 control-label"><?php $this->show('Enable moderation'); ?></label>
-					<div class="col-lg-10">
-                        <?php echo Element::checkbox('config[enable_moderation]', $config->getEnabledModeration(), array('class' => 'form-control')); ?>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="col-lg-2 control-label"><?php $this->show('Items per page'); ?></label>
-					<div class="col-lg-10">
-						<div class="input-group">
-                            <?php echo Element::number('config[per_page_count]', $config->getPerPageCount(), array('class' => 'form-control', 'min' => '1')); ?>
-							<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-						</div>
-						<span class="help-block"><?php $this->show('How many reviews you want to be displayed per page on the site?'); ?></span>
-					</div>
-				</div>
-			</div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label"><?php $this->show('Enable moderation'); ?></label>
+                <div class="col-lg-10">
+                    <?php echo Element::checkbox('config[enable_moderation]', $config->getEnabledModeration(), array('class' => 'form-control')); ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label"><?php $this->show('Items per page'); ?></label>
+                <div class="col-lg-10">
+                    <div class="input-group">
+                        <?php echo Element::number('config[per_page_count]', $config->getPerPageCount(), array('class' => 'form-control', 'min' => '1')); ?>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                    </div>
+                    <span class="help-block"><?php $this->show('How many reviews you want to be displayed per page on the site?'); ?></span>
+                </div>
+            </div>
 		</div>
 	</div>
-	
-	<button data-button="save" data-url="<?php echo $this->url('Reviews:Admin:Config@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-	<button data-button="cancel" data-url="<?php echo $this->url('Reviews:Admin:Review@gridAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
-	
+
+    <div class="actions">
+        <button data-button="save" data-url="<?php echo $this->url('Reviews:Admin:Config@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+        <button data-button="cancel" data-url="<?php echo $this->url('Reviews:Admin:Review@gridAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+	</div>
 </form>

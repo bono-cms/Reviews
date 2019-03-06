@@ -5,54 +5,52 @@ defined('KRYSTAL') or die;
 
 ?>
 
-<form data-group="review">
-	<div class="well">
-        <?php echo Element::hidden('review[id]', $review->getId()); ?>
-        
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::text('review[name]', $review->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name of the person who left this message'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::text('review[email]', $review->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email of the person who left this message'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Date'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::text('review[date]', date($dateFormat, $review->getTimestamp()), array('class' => 'form-control', 'placeholder' => $this->translate('Date of the publication'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-				</div>
-			</div>
-		</div>
-        
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
-			<div class="col-lg-10">
-                <?php echo Element::textarea('review[review]', $review->getReview(), array('data-wysiwyg' => 'true')); ?>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
-			<div class="col-lg-10">
-                <?php echo Element::checkbox('review[published]', $review->getPublished(), array('class' => 'form-control')); ?>
-			</div>
-		</div>
-	</div>
+<form class="card" data-group="review" autocomplete="off">
+    <?php echo Element::hidden('review[id]', $review->getId()); ?>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::text('review[name]', $review->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name of the person who left this message'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::text('review[email]', $review->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email of the person who left this message'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Date'); ?></label>
+        <div class="col-lg-10">
+            <div class="input-group">
+                <?php echo Element::text('review[date]', date($dateFormat, $review->getTimestamp()), array('class' => 'form-control', 'placeholder' => $this->translate('Date of the publication'))); ?>
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
+        <div class="col-lg-10">
+            <?php echo Element::textarea('review[review]', $review->getReview(), array('data-wysiwyg' => 'true')); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+        <div class="col-lg-10">
+            <?php echo Element::checkbox('review[published]', $review->getPublished(), array('class' => 'form-control')); ?>
+        </div>
+    </div>
 
     <?php $this->loadPartial('actions', array(
         'new' => !$review->getId(),
