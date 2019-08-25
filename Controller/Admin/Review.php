@@ -66,7 +66,7 @@ final class Review extends AbstractController
         $review = $this->getModuleService('reviewsManager')->fetchById($id);
 
         if ($review !== false) {
-            return $this->createForm($review, 'Edit the review');
+            return $this->createForm($review, $this->translator->translate('Edit the review from "%s"', $review->getName()));
         } else {
             return false;
         }
