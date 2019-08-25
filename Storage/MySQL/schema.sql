@@ -10,5 +10,7 @@ CREATE TABLE `bono_module_reviews` (
 	`name` varchar(254) NOT NULL,
 	`email` varchar(254) NOT NULL,
 	`review` LONGTEXT NOT NULL
+
+    FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE
 	
-) DEFAULT CHARSET = UTF8;
+) DEFAULT CHARSET=UTF8 ENGINE = InnoDB;
