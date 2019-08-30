@@ -124,13 +124,17 @@ final class Review extends AbstractController
     public function deleteAction($id)
     {
         $service = $this->getModuleService('reviewsManager');
+        $historyService = $this->getService('Cms', 'historyManager');
 
         // Batch removal
-        if ($this->request->hasPost('toDelete')) {
-            $ids = array_keys($this->request->getPost('toDelete'));
+        if ($this->request->hasPost('batch')) {
+            $ids = array_keys($this->request->getPost('batch'));
 
             $service->deleteByIds($ids);
             $this->flashBag->set('success', 'Selected elements have been removed successfully');
+
+            // Save in the history
+            $historyService->write('Reviews', 'Batch removal of %s reviews', count($ids));
 
         } else {
             $this->flashBag->set('warning', 'You should select at least one element to remove');
@@ -138,8 +142,13 @@ final class Review extends AbstractController
 
         // Single removal
         if (!empty($id)) {
+            $review = $this->getModuleService('reviewsManager')->fetchById($id);
+
             $service->deleteById($id);
             $this->flashBag->set('success', 'Selected element has been removed successfully');
+
+            // Save in the history
+            $historyService->write('Reviews', 'A review by "%s" has been removed', $review->getName());
         }
 
         return '1';
@@ -168,16 +177,21 @@ final class Review extends AbstractController
 
         if ($formValidator->isValid()) {
             $service = $this->getModuleService('reviewsManager');
+            $historyService = $this->getService('Cms', 'historyManager');
 
             if (!empty($input['id'])) {
                 if ($service->update($data)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
+
+                    $historyService->write('Reviews', 'A review by "%s" has been updated', $input['name']);
                     return '1';
                 }
 
             } else {
                 if ($service->add($data)) {
                     $this->flashBag->set('success', 'The element has been created successfully');
+
+                    $historyService->write('Reviews', 'A new review by "%s" has been added', $input['name']);
                     return $service->getLastId();
                 }
             }

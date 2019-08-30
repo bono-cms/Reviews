@@ -22,7 +22,7 @@ final class Module extends AbstractCmsModule
     public function getServiceProviders()
     {
         return array(
-            'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'), $this->getHistoryManager()),
+            'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper')),
             'configManager' => $this->createConfigService()
         );
     }

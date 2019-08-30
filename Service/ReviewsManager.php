@@ -16,7 +16,6 @@ use Cms\Service\HistoryManagerInterface;
 use Reviews\Storage\ReviewsMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
-use Krystal\Security\Filter;
 
 final class ReviewsManager extends AbstractManager implements ReviewsManagerInterface
 {
@@ -28,23 +27,14 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
     private $reviewsMapper;
 
     /**
-     * History manager
-     * 
-     * @var \Cms\Service\HistoryManagerInterface
-     */
-    private $historyManager;
-
-    /**
      * State initialization
      * 
      * @param \Review\Storage\ReviewsMapperInterface $reviewsMapper
-     * @param \Cms\Service\HistoryManagerInterface $historyManager
      * @return void
      */
-    public function __construct(ReviewsMapperInterface $reviewsMapper, HistoryManagerInterface $historyManager)
+    public function __construct(ReviewsMapperInterface $reviewsMapper)
     {
         $this->reviewsMapper = $reviewsMapper;
-        $this->historyManager = $historyManager;
     }
 
     /**
@@ -54,12 +44,12 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
     {
         $entity = new VirtualEntity();
         $entity->setId($review['id'], VirtualEntity::FILTER_INT)
-                  ->setTimestamp($review['timestamp'], VirtualEntity::FILTER_INT)
-                  ->setIp($review['ip'], VirtualEntity::FILTER_HTML)
-                  ->setPublished($review['published'], VirtualEntity::FILTER_BOOL)
-                  ->setName($review['name'], VirtualEntity::FILTER_HTML)
-                  ->setEmail($review['email'], VirtualEntity::FILTER_HTML)
-                  ->setReview($review['review'], VirtualEntity::FILTER_SAFE_TAGS);
+               ->setTimestamp($review['timestamp'], VirtualEntity::FILTER_INT)
+               ->setIp($review['ip'], VirtualEntity::FILTER_HTML)
+               ->setPublished($review['published'], VirtualEntity::FILTER_BOOL)
+               ->setName($review['name'], VirtualEntity::FILTER_HTML)
+               ->setEmail($review['email'], VirtualEntity::FILTER_HTML)
+               ->setReview($review['review'], VirtualEntity::FILTER_SAFE_TAGS);
 
         return $entity;
     }
@@ -78,7 +68,6 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
             }
         }
 
-        $this->historyManager->write('Reviews', 'Batch update of %s reviews', count($pair));
         return true;
     }
     
@@ -95,8 +84,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
                 return false;
             }
         }
-        
-        $this->track('Batch removal of %s reviews', count($ids));
+
         return true;
     }
 
@@ -108,14 +96,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
      */
     public function deleteById($id)
     {
-        $name = Filter::escape($this->reviewsMapper->fetchNameById($id));
-
-        if ($this->reviewsMapper->deleteById($id)) {
-            $this->track('A review by "%s" has been removed', $name);
-            return true;
-        } else {
-            return false;
-        }
+        return $this->reviewsMapper->deleteById($id);
     }
 
     /**
@@ -192,8 +173,6 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
      */
     public function add(array $input)
     {
-        $this->track('A new review by "%s" has been added', $input['name']);
-
         $input = $this->prepareContainer($input);
         return $this->reviewsMapper->insert($input);
     }
@@ -228,21 +207,7 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
      */
     public function update(array $input)
     {
-        $this->track('A review by "%s" has been updated', $input['name']);
-
         $input = $this->prepareContainer($input);
         return $this->reviewsMapper->update($input);
-    }
-
-    /**
-     * Tracks activity
-     * 
-     * @param string $message
-     * @param string $placeholder
-     * @return boolean
-     */
-    private function track($message, $placeholder)
-    {
-        return $this->historyManager->write('Reviews', $message, $placeholder);
     }
 }
