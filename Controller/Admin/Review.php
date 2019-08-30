@@ -179,21 +179,19 @@ final class Review extends AbstractController
             $service = $this->getModuleService('reviewsManager');
             $historyService = $this->getService('Cms', 'historyManager');
 
-            if (!empty($input['id'])) {
-                if ($service->update($data)) {
-                    $this->flashBag->set('success', 'The element has been updated successfully');
+            $service->save($data);
 
-                    $historyService->write('Reviews', 'A review by "%s" has been updated', $input['name']);
-                    return '1';
-                }
+            if (!empty($input['id'])) {
+                $this->flashBag->set('success', 'The element has been updated successfully');
+
+                $historyService->write('Reviews', 'A review by "%s" has been updated', $input['name']);
+                return '1';
 
             } else {
-                if ($service->add($data)) {
-                    $this->flashBag->set('success', 'The element has been created successfully');
+                $this->flashBag->set('success', 'The element has been created successfully');
 
-                    $historyService->write('Reviews', 'A new review by "%s" has been added', $input['name']);
-                    return $service->getLastId();
-                }
+                $historyService->write('Reviews', 'A new review by "%s" has been added', $input['name']);
+                return $service->getLastId();
             }
 
         } else {

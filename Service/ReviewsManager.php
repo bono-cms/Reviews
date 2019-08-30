@@ -17,7 +17,7 @@ use Reviews\Storage\ReviewsMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 
-final class ReviewsManager extends AbstractManager implements ReviewsManagerInterface
+final class ReviewsManager extends AbstractManager
 {
     /**
      * Any mapper that implements this interface
@@ -154,27 +154,17 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
     }
 
     /**
-     * Prepares data container before sending to a mapper
+     * Saves the form
      * 
      * @param array $data
      * @return void
      */
-    private function prepareContainer(array $data)
+    public function save(array $data)
     {
         $data['timestamp'] = strtotime($data['date']);
-        return ArrayUtils::arrayWithout($data, array('date'));
-    }
+        $data = ArrayUtils::arrayWithout($data, array('date'));
 
-    /**
-     * Adds a review
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function add(array $input)
-    {
-        $input = $this->prepareContainer($input);
-        return $this->reviewsMapper->insert($input);
+        return $this->reviewsMapper->persist($input);
     }
 
     /**
@@ -197,17 +187,5 @@ final class ReviewsManager extends AbstractManager implements ReviewsManagerInte
         }
 
         return $this->reviewsMapper->insert(ArrayUtils::arrayWithout($input, array('captcha')));
-    }
-
-    /**
-     * Updates a review
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function update(array $input)
-    {
-        $input = $this->prepareContainer($input);
-        return $this->reviewsMapper->update($input);
     }
 }
