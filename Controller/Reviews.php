@@ -45,7 +45,8 @@ final class Reviews extends AbstractController
      */
     private function showAction($id, $pageNumber, $code, $slug)
     {
-        $page = $this->getService('Pages', 'pageManager')->fetchById($id);
+        $pageManager = $this->getService('Pages', 'pageManager');
+        $page = $pageManager->fetchById($id);
 
         if ($page !== false) {
             // Prepare view
@@ -62,7 +63,8 @@ final class Reviews extends AbstractController
             return $this->view->render('reviews', array(
                 'reviews' => $reviews,
                 'paginator' => $paginator,
-                'page' => $page
+                'page' => $page,
+                'languages' => $pageManager->getSwitchUrls($id, 'Reviews:Reviews@indexAction')
             ));
 
         } else {
