@@ -85,8 +85,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
     public function fetchAllByPage($page, $itemsPerPage, $published)
     {
         $db = $this->db->select('*')
-                       ->from(self::getTableName())
-                       ->whereEquals('lang_id', $this->getLangId());
+                       ->from(self::getTableName());
 
         if ($published === true) {
             $db->andWhereEquals('published', '1')
