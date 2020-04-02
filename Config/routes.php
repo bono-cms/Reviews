@@ -24,7 +24,7 @@ return array(
     ),
     
     '/%s/module/reviews' => array(
-        'controller' => 'Admin:Review@gridAction'
+        'controller' => 'Admin:Review@indexAction'
     ),
     
     '/%s/module/reviews/tweak' => array(
@@ -33,7 +33,7 @@ return array(
     ),
     
     '/%s/module/reviews/page/(:var)' => array(
-        'controller' => 'Admin:Review@gridAction'
+        'controller' => 'Admin:Review@indexAction'
     ),
     
     '/%s/module/reviews/add' => array(

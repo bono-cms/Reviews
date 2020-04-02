@@ -32,7 +32,7 @@ final class Review extends AbstractController
                    ->load(array($this->getWysiwygPluginName(), 'datepicker'));
 
         // Append breadcrumb
-        $this->view->getBreadcrumbBag()->addOne('Reviews', 'Reviews:Admin:Review@gridAction')
+        $this->view->getBreadcrumbBag()->addOne('Reviews', 'Reviews:Admin:Review@indexAction')
                                        ->addOne($title);
 
         return $this->view->render('review.form', array(
@@ -78,7 +78,7 @@ final class Review extends AbstractController
      * @param string $page Current page
      * @return string
      */
-    public function gridAction($page = 1)
+    public function indexAction($page = 1)
     {
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
@@ -87,9 +87,9 @@ final class Review extends AbstractController
         $reviewsManager = $this->getModuleService('reviewsManager');
 
         $paginator = $reviewsManager->getPaginator();
-        $paginator->setUrl($this->createUrl('Reviews:Admin:Review@gridAction', array(), 1));
+        $paginator->setUrl($this->createUrl('Reviews:Admin:Review@indexAction', array(), 1));
 
-        return $this->view->render('browser', array(
+        return $this->view->render('index', array(
             'dateFormat' => $reviewsManager->getTimeFormat(),
             'reviews'   => $reviewsManager->fetchAll(false, $page, $this->getSharedPerPageCount()),
             'paginator' => $paginator
