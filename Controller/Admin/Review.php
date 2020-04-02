@@ -75,24 +75,23 @@ final class Review extends AbstractController
     /**
      * Renders a grid
      * 
-     * @param string $page Current page
      * @return string
      */
-    public function indexAction($page = 1)
+    public function indexAction()
     {
+        // Current page
+        $page = $this->request->getQuery('page', 1);
+
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Reviews');
-        
-        $reviewsManager = $this->getModuleService('reviewsManager');
 
-        $paginator = $reviewsManager->getPaginator();
-        $paginator->setUrl($this->createUrl('Reviews:Admin:Review@indexAction', array(), 1));
+        $reviewsManager = $this->getModuleService('reviewsManager');
 
         return $this->view->render('index', array(
             'dateFormat' => $reviewsManager->getTimeFormat(),
             'reviews'   => $reviewsManager->fetchAll(false, $page, $this->getSharedPerPageCount()),
-            'paginator' => $paginator
+            'paginator' => $reviewsManager->getPaginator()
         ));
     }
 
