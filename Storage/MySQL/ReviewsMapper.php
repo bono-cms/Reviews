@@ -66,7 +66,7 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
                        ->from(self::getTableName());
 
         if ($published === true) {
-            $db->andWhereEquals('published', '1')
+            $db->whereEquals('published', '1')
                ->orderBy(array(
                     'timestamp' => 'DESC', 
                     'id' => 'DESC'
