@@ -31,22 +31,6 @@ interface ReviewsMapperInterface
     public function updatePublishedById($id, $published);
 
     /**
-     * Inserts a review
-     * 
-     * @param array $data Review data
-     * @return boolean
-     */
-    public function insert(array $data);
-
-    /**
-     * Updates a review
-     * 
-     * @param array $data Review data
-     * @return boolean
-     */
-    public function update(array $data);
-
-    /**
      * Fetches all published reviews filtered by pagination
      * 
      * @param integer $page Current page

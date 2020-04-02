@@ -186,6 +186,6 @@ final class ReviewsManager extends AbstractManager
             $input['published'] = '1';
         }
 
-        return $this->reviewsMapper->insert(ArrayUtils::arrayWithout($input, array('captcha')));
+        return $this->reviewsMapper->persist(ArrayUtils::arrayWithout($input, array('captcha')));
     }
 }
