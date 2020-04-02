@@ -4,6 +4,7 @@ CHANGELOG
 1.1
 ---
 
+ * Added `SiteService`
  * Moved history tracker of out main service into the main controller
  * Fixed issue with quote escaping
  * Changed the way of storing configuration data. Since now its stored in the database
@@ -11,7 +12,6 @@ CHANGELOG
  * Merged `fetchAllPublishedByPage()` with `fetchAllPublished()`
  * Added support for table prefix
  * Updated module icon
- * Improved internal structure
 
 1.0
 ---
