@@ -55,12 +55,12 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
     /**
      * Fetches all published reviews filtered by pagination
      * 
+     * @param boolean $published Whether to fetch only published ones
      * @param integer $page Current page
      * @param integer $limit Per page count
-     * @param boolean $published
      * @return array
      */
-    public function fetchAllByPage($page, $limit, $published)
+    public function fetchAll($published, $page, $limit)
     {
         $db = $this->db->select('*')
                        ->from(self::getTableName());
@@ -76,7 +76,11 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
                ->desc();
         }
 
-        return $db->paginate($page, $limit)
-                  ->queryAll();
+        // Apply pagination if required
+        if ($page !== null && $limit !== null) {
+            $db->paginate($page, $limit);
+        }
+
+        return $db->queryAll();
     }
 }

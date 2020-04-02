@@ -33,10 +33,10 @@ interface ReviewsMapperInterface
     /**
      * Fetches all published reviews filtered by pagination
      * 
+     * @param boolean $published Whether to fetch only published ones
      * @param integer $page Current page
      * @param integer $limit Per page count
-     * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $limit, $published);
+    public function fetchAll($published, $page, $limit);
 }

@@ -54,7 +54,7 @@ final class Reviews extends AbstractController
                        ->addOne($page->getName());
 
             $reviewManager = $this->getModuleService('reviewsManager');
-            $reviews = $reviewManager->fetchAllByPage($pageNumber, $this->getConfig()->getPerPageCount(), true);
+            $reviews = $reviewManager->fetchAll(true, $pageNumber, $this->getConfig()->getPerPageCount());
 
             $paginator = $reviewManager->getPaginator();
             $this->preparePaginator($paginator, $code, $slug, $pageNumber);

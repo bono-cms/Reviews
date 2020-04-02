@@ -91,7 +91,7 @@ final class Review extends AbstractController
 
         return $this->view->render('browser', array(
             'dateFormat' => $reviewsManager->getTimeFormat(),
-            'reviews'   => $reviewsManager->fetchAllByPage($page, $this->getSharedPerPageCount(), false),
+            'reviews'   => $reviewsManager->fetchAll(false, $page, $this->getSharedPerPageCount()),
             'paginator' => $paginator
         ));
     }
