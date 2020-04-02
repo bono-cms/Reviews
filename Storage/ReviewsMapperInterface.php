@@ -50,11 +50,11 @@ interface ReviewsMapperInterface
      * Fetches all published reviews filtered by pagination
      * 
      * @param integer $page Current page
-     * @param integer $itemsPerPage Per page count
+     * @param integer $limit Per page count
      * @param boolean $published Whether to filter by published attribute
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage, $published);
+    public function fetchAllByPage($page, $limit, $published);
 
     /**
      * Fetches review data by its associated id

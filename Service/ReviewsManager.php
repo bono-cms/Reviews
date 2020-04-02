@@ -123,13 +123,13 @@ final class ReviewsManager extends AbstractManager
      * Fetches all reviews filtered pagination
      * 
      * @param integer $page Current page
-     * @param integer $itemsPerPage Items to be shown per page
+     * @param integer $limit Items to be shown per page
      * @param boolean $published
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage, $published)
+    public function fetchAllByPage($page, $limit, $published)
     {
-        return $this->prepareResults($this->reviewsMapper->fetchAllByPage($page, $itemsPerPage, $published));
+        return $this->prepareResults($this->reviewsMapper->fetchAllByPage($page, $limit, $published));
     }
 
     /**
