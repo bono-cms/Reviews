@@ -164,7 +164,7 @@ final class ReviewsManager extends AbstractManager
         $data['timestamp'] = strtotime($data['date']);
         $data = ArrayUtils::arrayWithout($data, array('date'));
 
-        return $this->reviewsMapper->persist($input);
+        return $this->reviewsMapper->persist($data);
     }
 
     /**
