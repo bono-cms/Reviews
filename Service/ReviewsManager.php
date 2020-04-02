@@ -96,7 +96,7 @@ final class ReviewsManager extends AbstractManager
      */
     public function deleteById($id)
     {
-        return $this->reviewsMapper->deleteById($id);
+        return $this->reviewsMapper->deleteByPk($id);
     }
 
     /**
@@ -133,16 +133,6 @@ final class ReviewsManager extends AbstractManager
     }
 
     /**
-     * Returns last id
-     * 
-     * @return integer
-     */
-    public function getLastId()
-    {
-        return $this->reviewsMapper->getLastId();
-    }
-
-    /**
      * Fetches a review by its associated id
      * 
      * @param string $id
@@ -150,7 +140,17 @@ final class ReviewsManager extends AbstractManager
      */
     public function fetchById($id)
     {
-        return $this->prepareResult($this->reviewsMapper->fetchById($id));
+        return $this->prepareResult($this->reviewsMapper->findByPk($id));
+    }
+
+    /**
+     * Returns last id
+     * 
+     * @return integer
+     */
+    public function getLastId()
+    {
+        return $this->reviewsMapper->getLastId();
     }
 
     /**

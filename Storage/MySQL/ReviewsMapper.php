@@ -53,28 +53,6 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
     }
 
     /**
-     * Adds a review
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function insert(array $input)
-    {
-        return $this->persist($this->getWithLang($input));
-    }
-
-    /**
-     * Updates a review
-     * 
-     * @param array $input Review data
-     * @return boolean
-     */
-    public function update(array $input)
-    {
-        return $this->persist($input);
-    }
-
-    /**
      * Fetches all published reviews filtered by pagination
      * 
      * @param integer $page Current page
@@ -100,27 +78,5 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 
         return $db->paginate($page, $limit)
                   ->queryAll();
-    }
-
-    /**
-     * Fetches review data by its associated id
-     * 
-     * @param string $id
-     * @return array
-     */
-    public function fetchById($id)
-    {
-        return $this->findByPk($id);
-    }
-
-    /**
-     * Deletes a review by its associated id
-     * 
-     * @param string $id
-     * @return boolean
-     */
-    public function deleteById($id)
-    {
-        return $this->deleteByPk($id);
     }
 }

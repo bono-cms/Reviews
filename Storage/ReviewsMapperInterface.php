@@ -39,20 +39,4 @@ interface ReviewsMapperInterface
      * @return array
      */
     public function fetchAllByPage($page, $limit, $published);
-
-    /**
-     * Fetches review data by its associated id
-     * 
-     * @param string $id Review id
-     * @return array
-     */
-    public function fetchById($id);
-
-    /**
-     * Deletes a review by its associated id
-     * 
-     * @param string $id Review id
-     * @return boolean
-     */
-    public function deleteById($id);
 }
