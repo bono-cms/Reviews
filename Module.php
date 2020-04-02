@@ -13,6 +13,7 @@ namespace Reviews;
 
 use Cms\AbstractCmsModule;
 use Reviews\Service\ReviewsManager;
+use Reviews\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -21,9 +22,12 @@ final class Module extends AbstractCmsModule
      */
     public function getServiceProviders()
     {
+        $reviewsManager = new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'));
+
         return array(
-            'reviewsManager' => new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper')),
-            'configManager' => $this->createConfigService()
+            'reviewsManager' => $reviewsManager,
+            'configManager' => $this->createConfigService(),
+            'siteService' => new SiteService($reviewsManager)
         );
     }
 }
