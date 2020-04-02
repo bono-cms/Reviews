@@ -12,7 +12,7 @@ return array(
         'icon' => 'fas fa-frown-open',
         'items' => array(
             array(
-                'route' => 'Reviews:Admin:Review@gridAction',
+                'route' => 'Reviews:Admin:Review@indexAction',
                 'name' => 'View all reviews'
             ),
             array(
