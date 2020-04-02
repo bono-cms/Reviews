@@ -176,15 +176,8 @@ final class ReviewsManager extends AbstractManager
      */
     public function send(array $input, $enableModeration)
     {
-        // Always current timestamp
-        $input['timestamp'] = time();
-
-        // This value depends on configuration, where we handled moderation
-        if ($enableModeration) {
-            $input['published'] = '0';
-        } else {
-            $input['published'] = '1';
-        }
+        $input['timestamp'] = time(); // Always current timestamp
+        $input['published'] = $enableModeration ? '0' : '1'; // This value depends on configuration, where we handled moderation
 
         return $this->reviewsMapper->persist(ArrayUtils::arrayWithout($input, array('captcha')));
     }
