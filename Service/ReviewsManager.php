@@ -162,7 +162,7 @@ final class ReviewsManager extends AbstractManager
     public function save(array $data)
     {
         $data['timestamp'] = strtotime($data['date']);
-        $data = ArrayUtils::arrayWithout($data, array('date'));
+        $data = ArrayUtils::arrayWithout($data, ['date']);
 
         return $this->reviewsMapper->persist($data);
     }
@@ -179,6 +179,6 @@ final class ReviewsManager extends AbstractManager
         $input['timestamp'] = time(); // Always current timestamp
         $input['published'] = $enableModeration ? '0' : '1'; // This value depends on configuration, where we handled moderation
 
-        return $this->reviewsMapper->persist(ArrayUtils::arrayWithout($input, array('captcha')));
+        return $this->reviewsMapper->persist(ArrayUtils::arrayWithout($input, ['captcha']));
     }
 }

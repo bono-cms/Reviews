@@ -6,13 +6,13 @@ defined('KRYSTAL') or die;
 ?>
 
 <form class="card" data-group="review" autocomplete="off">
-    <?php echo Element::hidden('review[id]', $review->getId()); ?>
+    <?= Element::hidden('review[id]', $review->getId()); ?>
 
     <div class="form-group">
         <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
         <div class="col-lg-10">
             <div class="input-group">
-                <?php echo Element::text('review[name]', $review->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name of the person who left this message'))); ?>
+                <?= Element::text('review[name]', $review->getName(), ['class' => 'form-control', 'placeholder' => $this->translate('Name of the person who left this message')]); ?>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
             </div>
         </div>
@@ -22,7 +22,7 @@ defined('KRYSTAL') or die;
         <label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
         <div class="col-lg-10">
             <div class="input-group">
-                <?php echo Element::text('review[email]', $review->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email of the person who left this message'))); ?>
+                <?= Element::text('review[email]', $review->getEmail(), ['class' => 'form-control', 'placeholder' => $this->translate('Email of the person who left this message')]); ?>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
             </div>
         </div>
@@ -32,7 +32,7 @@ defined('KRYSTAL') or die;
         <label class="col-lg-2 control-label"><?php $this->show('Date'); ?></label>
         <div class="col-lg-10">
             <div class="input-group">
-                <?php echo Element::text('review[date]', date($dateFormat, $review->getTimestamp()), array('class' => 'form-control', 'placeholder' => $this->translate('Date of the publication'))); ?>
+                <?= Element::text('review[date]', date($dateFormat, $review->getTimestamp()), ['class' => 'form-control', 'placeholder' => $this->translate('Date of the publication')]); ?>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             </div>
         </div>
@@ -41,23 +41,23 @@ defined('KRYSTAL') or die;
     <div class="form-group">
         <label class="col-lg-2 control-label"><?php $this->show('Content'); ?></label>
         <div class="col-lg-10">
-            <?php echo Element::textarea('review[review]', $review->getReview(), array('data-wysiwyg' => 'true')); ?>
+            <?= Element::textarea('review[review]', $review->getReview(), ['data-wysiwyg' => 'true']); ?>
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
         <div class="col-lg-10">
-            <?php echo Element::checkbox('review[published]', $review->getPublished(), array('class' => 'form-control')); ?>
+            <?= Element::checkbox('review[published]', $review->getPublished(), ['class' => 'form-control']); ?>
         </div>
     </div>
 
-    <?php $this->loadPartial('actions', array(
+    <?php $this->loadPartial('actions', [
         'new' => !$review->getId(),
         'add' => 'Reviews:Admin:Review@addAction',
         'edit' => 'Reviews:Admin:Review@editAction',
         'save' => 'Reviews:Admin:Review@saveAction',
         'cancel' => 'Reviews:Admin:Review@indexAction'
-    )); ?>
+    ]); ?>
 
 </form>

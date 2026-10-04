@@ -20,8 +20,8 @@ final class Dropper extends AbstractStorageDropper
      */
     protected function getTables()
     {
-        return array(
+        return [
             ReviewsMapper::getTableName()
-        );
+        ];
     }
 }

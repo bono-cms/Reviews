@@ -9,80 +9,80 @@ defined('KRYSTAL') or die;
 ?>
 
 <div class="btn-toolbar">
-    <?php $this->loadPartial('menu', array(
-        'items' => array(
+    <?php $this->loadPartial('menu', [
+        'items' => [
             'Reviews:Admin:Review@addAction' => 'Add new review',
             'Reviews:Admin:Config@indexAction' => 'Configuration',
-        ),
+        ],
 
-        'actions' => array(
+        'actions' => [
             'data' => $reviews,
             'save' => 'Reviews:Admin:Review@tweakAction',
             'delete' => 'Reviews:Admin:Review@deleteAction'
-        )
-    )); ?>
+        ]
+    ]); ?>
 </div>
 
 <div class="card">
-    <?php $this->loadPartial('items-per-page', array('caption' => 'Reviews')); ?>
+    <?php $this->loadPartial('items-per-page', ['caption' => 'Reviews']); ?>
 
     <form>
         <div class="table-responsive">
-            <?= $this->widget(new GridViewWidget($reviews, array(
+            <?= $this->widget(new GridViewWidget($reviews, [
                 'batch' => true,
                 'pk' => 'id',
                 'tableClass' => 'table table-hover table-bordered table-striped',
-                'columns' => array(
-                    array(
+                'columns' => [
+                    [
                         'column' => 'id',
                         'label' => '#'
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'name'
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'email'
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'timestamp',
                         'label' => 'Date',
                         'value' => function($review) use ($dateFormat){
                             return date($dateFormat, $review->getTimestamp());
                         }
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'ip',
                         'label' => 'IP-Address'
-                    ),
+                    ],
 
-                    array(
+                    [
                         'column' => 'published',
                         'value' => function($review){
                             return Element::checkbox(sprintf('published[%s]', $review->getId()), $review->getPublished());
                         }
-                    )
-                ),
+                    ]
+                ],
 
-                'actions' => array(
-                    'edit' => function($review){
+                'actions' => [
+                    function($review){
                         return Icon::edit(
                             $this->url('Reviews:Admin:Review@editAction', $review->getId()),
                             $this->translate('Edit this review')
                         );
                     },
 
-                    'remove' => function($review){
+                    function($review){
                         return Icon::remove(
                             $this->url('Reviews:Admin:Review@deleteAction', $review->getId()),
                             $this->translate('Remove this review')
                         );
                     }
-                )
-            ))); ?>        
+                ]
+            ])); ?>        
             
             <?php if (empty($reviews)): ?>
             <div class="center-block">

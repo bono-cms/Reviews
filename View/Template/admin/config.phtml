@@ -15,7 +15,7 @@ defined('KRYSTAL') or die;
             <div class="form-group">
                 <label class="col-lg-2 control-label"><?php $this->show('Enable moderation'); ?></label>
                 <div class="col-lg-10">
-                    <?php echo Element::checkbox('config[enable_moderation]', $config->getEnabledModeration(), array('class' => 'form-control')); ?>
+                    <?= Element::checkbox('config[enable_moderation]', $config->getEnabledModeration(), ['class' => 'form-control']); ?>
                 </div>
             </div>
 
@@ -23,7 +23,7 @@ defined('KRYSTAL') or die;
                 <label class="col-lg-2 control-label"><?php $this->show('Items per page'); ?></label>
                 <div class="col-lg-10">
                     <div class="input-group">
-                        <?php echo Element::number('config[per_page_count]', $config->getPerPageCount(), array('class' => 'form-control', 'min' => '1')); ?>
+                        <?= Element::number('config[per_page_count]', $config->getPerPageCount(), ['class' => 'form-control', 'min' => '1']); ?>
                         <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
                     </div>
                     <span class="help-block"><?php $this->show('How many reviews you want to be displayed per page on the site?'); ?></span>
@@ -33,7 +33,7 @@ defined('KRYSTAL') or die;
 	</div>
 
     <div class="actions">
-        <button data-button="save" data-url="<?php echo $this->url('Reviews:Admin:Config@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
-        <button data-button="cancel" data-url="<?php echo $this->url('Reviews:Admin:Review@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
+        <button data-button="save" data-url="<?= $this->url('Reviews:Admin:Config@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+        <button data-button="cancel" data-url="<?= $this->url('Reviews:Admin:Review@indexAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-open"></i> <?php $this->show('Cancel'); ?></button>
 	</div>
 </form>

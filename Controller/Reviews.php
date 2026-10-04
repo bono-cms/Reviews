@@ -12,7 +12,6 @@
 namespace Reviews\Controller;
 
 use Site\Controller\AbstractController;
-use Krystal\Validate\Pattern;
 
 final class Reviews extends AbstractController
 {
@@ -60,12 +59,12 @@ final class Reviews extends AbstractController
             $paginator = $reviewManager->getPaginator();
             $this->preparePaginator($paginator, $code, $slug, $pageNumber);
 
-            return $this->view->render('reviews', array(
+            return $this->view->render('reviews', [
                 'reviews' => $reviews,
                 'paginator' => $paginator,
                 'page' => $page,
                 'languages' => $pageManager->getSwitchUrls($id, 'Reviews:Reviews@indexAction')
-            ));
+            ]);
 
         } else {
             return false;
@@ -81,21 +80,25 @@ final class Reviews extends AbstractController
     {
         $input = $this->request->getPost();
 
-        $formValidator = $this->createValidator(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => array(
-                    'name' => new Pattern\Name(),
-                    'email' => new Pattern\Email(),
-                    'captcha' => new Pattern\Captcha($this->captcha),
-                    'review' => new Pattern\Message()
-                )
-            )
-        ));
+        $validator = $this->createValidation();
 
-        if ($formValidator->isValid()) {
+        $validator->field('name')
+                  ->required();
+
+        $validator->field('email')
+                  ->required()
+                  ->addRule('email');
+
+        $validator->field('review')
+                  ->required();
+
+        $validator->field('captcha')
+                  ->required()
+                  ->addRule('captcha', null, ['expected' => $this->captcha->getAnswer()]);
+
+        if ($validator->isPassed()) {
             // Summary data to be sent
-            $data = array_merge($input, array('ip' => $this->request->getClientIP()));
+            $data = array_merge($input, ['ip' => $this->request->getClientIP()]);
 
             // Defines whether must be published or not
             $published = (bool) $this->getConfig()->getEnabledModeration();
@@ -113,10 +116,14 @@ final class Reviews extends AbstractController
                 $this->flashBag->set('success', 'Your review has been sent! Thank you');
             }
 
-            return '1';
+            return $this->json([
+                'refresh' => true
+            ]);
 
         } else {
-            return $formValidator->getErrors();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 
@@ -129,9 +136,9 @@ final class Reviews extends AbstractController
     private function sendMessage(array $input)
     {
         // Render the body firstly
-        $message = $this->view->renderRaw($this->moduleName, 'messages', 'notification', array(
+        $message = $this->view->renderRaw($this->moduleName, 'messages', 'notification', [
             'input' => $input
-        ));
+        ]);
 
         // Prepare a subject
         $subject = $this->translator->translate('You have received a new review from %s', $input['name']);

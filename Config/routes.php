@@ -9,44 +9,44 @@
  * the license file that was distributed with this source code.
  */
 
-return array(
-    '/module/reviews' => array(
+return [
+    '/module/reviews' => [
         'controller' => 'Reviews@indexAction'
-    ),
+    ],
 
-    '/%s/module/reviews/config' => array(
+    '/%s/module/reviews/config' => [
         'controller' => 'Admin:Config@indexAction'
-    ),
+    ],
 
-    '/%s/module/reviews/config.ajax' => array(
+    '/%s/module/reviews/config.ajax' => [
         'controller' => 'Admin:Config@saveAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
 
-    '/%s/module/reviews' => array(
+    '/%s/module/reviews' => [
         'controller' => 'Admin:Review@indexAction'
-    ),
+    ],
 
-    '/%s/module/reviews/tweak' => array(
+    '/%s/module/reviews/tweak' => [
         'controller' => 'Admin:Review@tweakAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
 
-    '/%s/module/reviews/add' => array(
+    '/%s/module/reviews/add' => [
         'controller' => 'Admin:Review@addAction'
-    ),
+    ],
 
-    '/%s/module/reviews/edit/(:var)' => array(
+    '/%s/module/reviews/edit/(:var)' => [
         'controller' => 'Admin:Review@editAction'
-    ),
+    ],
 
-    '/%s/module/reviews/save' => array(
+    '/%s/module/reviews/save' => [
         'controller' => 'Admin:Review@saveAction',
-        'disallow' => array('guest')
-    ),
+        'disallow' => ['guest']
+    ],
 
-    '/%s/module/reviews/delete/(:var)' => array(
+    '/%s/module/reviews/delete/(:var)' => [
         'controller' => 'Admin:Review@deleteAction',
-        'disallow' => array('guest')
-    )
-);
+        'disallow' => ['guest']
+    ]
+];

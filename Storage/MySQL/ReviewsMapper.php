@@ -44,10 +44,10 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
      */
     public function updatePublishedById($id, $published)
     {
-        $data = array(
+        $data = [
             'published' => $published,
             'id' => $id
-        );
+        ];
 
         return $this->persist($data);
     }
@@ -67,10 +67,10 @@ final class ReviewsMapper extends AbstractMapper implements ReviewsMapperInterfa
 
         if ($published === true) {
             $db->whereEquals('published', '1')
-               ->orderBy(array(
+               ->orderBy([
                     'timestamp' => 'DESC', 
                     'id' => 'DESC'
-               ));
+               ]);
         } else {
             $db->orderBy('id')
                ->desc();

@@ -24,10 +24,10 @@ final class Module extends AbstractCmsModule
     {
         $reviewsManager = new ReviewsManager($this->getMapper('/Reviews/Storage/MySQL/ReviewsMapper'));
 
-        return array(
+        return [
             'reviewsManager' => $reviewsManager,
             'configManager' => $this->createConfigService(),
             'siteService' => new SiteService($reviewsManager)
-        );
+        ];
     }
 }

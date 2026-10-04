@@ -12,7 +12,6 @@
 namespace Reviews\Controller\Admin;
 
 use Cms\Controller\Admin\AbstractController;
-use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
 
 final class Review extends AbstractController
@@ -29,16 +28,16 @@ final class Review extends AbstractController
         // Load view plugins
         $this->view->getPluginBag()
                    ->appendScript('@Reviews/admin/review.form.js')
-                   ->load(array($this->getWysiwygPluginName(), 'datepicker'));
+                   ->load([$this->getWysiwygPluginName(), 'datepicker']);
 
         // Append breadcrumb
         $this->view->getBreadcrumbBag()->addOne('Reviews', 'Reviews:Admin:Review@indexAction')
                                        ->addOne($title);
 
-        return $this->view->render('review.form', array(
+        return $this->view->render('review.form', [
             'dateFormat' => $this->getModuleService('reviewsManager')->getTimeFormat(),
             'review' => $review
-        ));
+        ]);
     }
 
     /**
@@ -88,11 +87,11 @@ final class Review extends AbstractController
 
         $reviewsManager = $this->getModuleService('reviewsManager');
 
-        return $this->view->render('index', array(
+        return $this->view->render('index', [
             'dateFormat' => $reviewsManager->getTimeFormat(),
             'reviews'   => $reviewsManager->fetchAll(false, $page, $this->getSharedPerPageCount()),
             'paginator' => $reviewsManager->getPaginator()
-        ));
+        ]);
     }
 
     /**
@@ -110,8 +109,15 @@ final class Review extends AbstractController
             $reviewsManager->updatePublished($published);
 
             $this->flashBag->set('success', 'Settings have been successfully saved');
-            return '1';
+
+            return $this->json([
+                'refresh' => true
+            ]);
         }
+
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -150,7 +156,9 @@ final class Review extends AbstractController
             $historyService->write('Reviews', 'A review by "%s" has been removed', $review->getName());
         }
 
-        return '1';
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -161,20 +169,21 @@ final class Review extends AbstractController
     public function saveAction()
     {
         $input = $this->request->getPost('review');
-        $data = array_merge(array('ip' => $this->request->getClientIp()), $input);
+        $data = array_merge(['ip' => $this->request->getClientIp()], $input);
 
-        $formValidator = $this->createValidator(array(
-            'input' => array(
-                'source' => $input,
-                'definition' => array(
-                    'name' => new Pattern\Name(),
-                    'email' => new Pattern\Email(),
-                    'review' => new Pattern\Content(),
-                )
-            )
-        ));
+        $validator = $this->createValidation();
 
-        if ($formValidator->isValid()) {
+        $validator->field('review.name')
+                  ->required();
+
+        $validator->field('review.email')
+                  ->required()
+                  ->addRule('email');
+
+        $validator->field('review.review')
+                  ->required();
+
+        if ($validator->isPassed()) {
             $service = $this->getModuleService('reviewsManager');
             $historyService = $this->getService('Cms', 'historyManager');
 
@@ -184,17 +193,25 @@ final class Review extends AbstractController
                 $this->flashBag->set('success', 'The element has been updated successfully');
 
                 $historyService->write('Reviews', 'A review by "%s" has been updated', $input['name']);
-                return '1';
+
+                return $this->json([
+                    'refresh' => true
+                ]);
 
             } else {
                 $this->flashBag->set('success', 'The element has been created successfully');
 
                 $historyService->write('Reviews', 'A new review by "%s" has been added', $input['name']);
-                return $service->getLastId();
+
+                return $this->json([
+                    'redirect' => $this->createUrl('Reviews:Admin:Review@editAction', [$service->getLastId()]),
+                ]);
             }
 
         } else {
-            return $formValidator->getErrors();
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }

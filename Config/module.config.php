@@ -4,25 +4,25 @@
  * Module configuration container
  */
 
-return array(
+return [
     'name' => 'Reviews',
     'description' => 'Reviews module allows you to make a guest book on your site',
-    'menu' => array(
+    'menu' => [
         'name' => 'Reviews',
         'icon' => 'fas fa-frown-open',
-        'items' => array(
-            array(
+        'items' => [
+            [
                 'route' => 'Reviews:Admin:Review@indexAction',
                 'name' => 'View all reviews'
-            ),
-            array(
+            ],
+            [
                 'route' => 'Reviews:Admin:Review@addAction',
                 'name' => 'Add new review'
-            ),
-            array(
+            ],
+            [
                 'route' => 'Reviews:Admin:Config@indexAction',
                 'name' => 'Configuration'
-            )
-        )
-    )
-);
+            ]
+        ]
+    ]
+];
